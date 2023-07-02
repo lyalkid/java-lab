@@ -21,7 +21,7 @@ public class Main {
        appService.addEvent("Практика по Java", LocalDate.now());
        appService.addEvent("Практика по Golang", LocalDate.now().plusDays(1));
 
-       // appService.addUserToEvent("marsel@gmail.com", "Практика по Golang");
+       appService.addUserToEvent("marsel@gmail.com", "Практика по Golang");
         System.out.print(usersRepository.findByEmail("marsel@gmail.com"));
         System.out.print(eventsRepository.findByName("Практика по Java"));
     }

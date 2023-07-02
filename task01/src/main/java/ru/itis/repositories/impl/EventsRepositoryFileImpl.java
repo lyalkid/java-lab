@@ -5,9 +5,11 @@ import ru.itis.models.User;
 import ru.itis.repositories.EventsRepository;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+
 
 /**
  * 6/30/2023
@@ -23,6 +25,56 @@ public class EventsRepositoryFileImpl implements EventsRepository {
         this.eventFileName = eventFileName;
         this.eventsAndUsersFileName = eventsAndUsersFileName;
     }
+    @Override
+    public List<Event> findAllByMembersContains(User user){
+        List<Event> eventsByUsers = new ArrayList<>();
+        String userId = user.getId();
+        Map<String, String> membersMap = new HashMap<>(); // k - мероприятие, v - пользователь
+
+        File file = new File(this.eventsAndUsersFileName);
+        try (BufferedReader br = new BufferedReader(new FileReader(file)))
+        {
+            String line;
+            String[] eventNUsers = new String[2];
+            while ((line = br.readLine()) != null) {
+                eventNUsers = line.split("\\|");
+                String uId = eventNUsers[0];
+                String eId = eventNUsers[1];
+                if(userId.equals(uId)) {
+                    membersMap.put(eId, uId);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Set<String> alleventId = membersMap.keySet();
+
+        File file1 = new File(this.eventFileName);
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file1)))
+        {
+            String line;
+            String[] data = new String[3];
+            while ((line =bufferedReader.readLine()) != null) {
+                data = line.split("\\|");
+
+                String id = data[0];
+                String name = data[1];
+                LocalDate localDate = LocalDate.parse(data[2]);
+                if(alleventId.contains(id)){
+                    Event event = new Event(id, localDate, name);
+                    eventsByUsers.add(event);
+                }
+            }
+
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return eventsByUsers;
+    }
+
+
 
     @Override
     public void save(Event model) {

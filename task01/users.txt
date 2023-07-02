@@ -2,3 +2,5 @@
 b4ea1460-cf14-4c63-913b-966e78bbc1df|marsel@gmail.com|qwerty008
 be8b2c21-6b5c-4110-bf79-dffcf882ecdd|admin@gmail.com|qwerty007
 8824eeb0-28c5-4711-aa38-e18e7e21d59f|marsel@gmail.com|qwerty008
+645601e2-2b0d-4d25-9ca2-5c69103984ed|admin@gmail.com|qwerty007
+4f596c95-734b-4ca4-9bfd-85250dacb258|marsel@gmail.com|qwerty008

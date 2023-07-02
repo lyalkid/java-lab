@@ -6,6 +6,8 @@ import ru.itis.repositories.EventsRepository;
 import ru.itis.repositories.UsersRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -33,7 +35,12 @@ public class AppService {
 
         usersRepository.save(user);
     }
-
+    public List<Event> getAllEventsByUser(String email){
+        User user = this.usersRepository.findByEmail(email);
+        List<Event> eventsByUser = new ArrayList<>();
+        eventsByUser = this.eventsRepository.findAllByMembersContains(user);
+        return eventsByUser;
+    }
     public void addEvent(String name, LocalDate date) {
         Event event = Event.builder()
                 .id(UUID.randomUUID().toString())

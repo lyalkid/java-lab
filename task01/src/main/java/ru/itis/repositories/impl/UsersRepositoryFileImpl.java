@@ -35,7 +35,7 @@ public class UsersRepositoryFileImpl implements UsersRepository {
 
     @Override
     public User findByEmail(String emailUser) {
-        // TODO: реализовано
+        // TODO
         Map<String, User> userMap = new HashMap<>();
 
         String[] data = new String[3];
