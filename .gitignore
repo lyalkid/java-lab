@@ -5,6 +5,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+pom.xml
 
 ### Eclipse ###
 .apt_generated
