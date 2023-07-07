@@ -3,7 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-*.txt/
+.txt
 ### IntelliJ IDEA ###
 .idea
 pom.xml
