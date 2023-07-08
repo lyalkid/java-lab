@@ -5,20 +5,20 @@ create table good(
     count integer
 );
 
-create table zakazchiki(
+create table customer(
     id serial primary key,
     first_name varchar(20),
     last_name varchar(20),
-    camponie varchar(20)
+    company varchar(20)
 );
 
 create table shop(
     id serial primary key,
     brand varchar(20),
-    adress varchar(20)-- чекнуть как адреса проверяются
+    adress varchar(20)
 );
 
-create table good_in_shop(
+create table good_shop(
     id serial primary key,
     shop_id integer,
     good_id integer,
@@ -26,10 +26,10 @@ create table good_in_shop(
     foreign key (good_id) references good(id)
 );
 
-create table zakazi(
+create table orders(
   id serial primary key,
-  good_id integer,
-  zakazchik integer,
-  foreign key (good_id) references good_in_shop(id),
-  foreign key (zakazchik) references zakazchiki(id)
-)
+  good_shop_id integer,
+  customer_id integer,
+  foreign key (good_shop_id) references good_shop(id),
+  foreign key (customer_id) references customer(id)
+);

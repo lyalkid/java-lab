@@ -12,7 +12,7 @@ values ('cheese', 100, 100),
        ('water', 50, 200),
        ('tea', 90, 100);
 
-insert into zakazchiki(first_name, last_name, componie)
+insert into customer(first_name, last_name, company)
 values ('Azamat', 'Gaifullin', 'KPFU'),
        ('Petr', 'Pilovskiy', 'Tainer'),
        ('Ascar', 'Trovo', 'Pech');
@@ -22,7 +22,7 @@ values ('Пятерочка', 'Восстания 80'),
        ('Spar', 'Краснокакшайская 42'),
        ('Ozon', 'Краснокакшайская 82');
 
-insert into good_in_shop(shop_id, good_id)
+insert into good_shop(shop_id, good_id)
 values (1, 1),
        (1, 2),
        (1, 3),
@@ -36,7 +36,7 @@ values (1, 1),
        (3, 11),
        (3, 12);
 
-insert into zakazi(good_id, zakazchik)
+insert into orders(good_shop_id, customer_id)
 values (1, 1),
        (1, 2),
        (2, 3),
@@ -53,9 +53,3 @@ values (1, 1),
        (10, 1),
        (11, 2),
        (12, 3);
-
-
-
-
-
-
