@@ -10,15 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * 6/30/2023
- * Repository Example
- *
- * @author Marsel Sidikov (AIT TR)
- */
 public class AppService {
 
     private final UsersRepository usersRepository;
+
     private final EventsRepository eventsRepository;
 
     public AppService(UsersRepository usersRepository, EventsRepository eventsRepository) {
@@ -35,12 +30,13 @@ public class AppService {
 
         usersRepository.save(user);
     }
-    public List<Event> getAllEventsByUser(String email){
+
+    public List<Event> getAllEventsByUser(String email) throws NullPointerException {
         User user = this.usersRepository.findByEmail(email);
-        List<Event> eventsByUser = new ArrayList<>();
-        eventsByUser = this.eventsRepository.findAllByMembersContains(user);
+        List<Event> eventsByUser =  this.eventsRepository.findAllByMembersContains(user);
         return eventsByUser;
     }
+
     public void addEvent(String name, LocalDate date) {
         Event event = Event.builder()
                 .id(UUID.randomUUID().toString())
@@ -63,7 +59,6 @@ public class AppService {
         if (event == null) {
             throw new IllegalArgumentException("Событие не найдено");
         }
-
         eventsRepository.saveUserToEvent(user, event);
     }
 }

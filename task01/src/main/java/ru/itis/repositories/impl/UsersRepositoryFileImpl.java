@@ -4,17 +4,10 @@ import ru.itis.models.User;
 import ru.itis.repositories.UsersRepository;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
-/**
- * 6/30/2023
- * Repository Example
- *
- * @author Marsel Sidikov (AIT TR)
- */
+
 public class UsersRepositoryFileImpl implements UsersRepository {
 
     private final String fileName;
@@ -25,7 +18,7 @@ public class UsersRepositoryFileImpl implements UsersRepository {
 
     @Override
     public void save(User model) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             writer.write(model.getId() + "|" + model.getEmail() + "|" + model.getPassword());
             writer.newLine();
         } catch (IOException e) {
@@ -35,24 +28,44 @@ public class UsersRepositoryFileImpl implements UsersRepository {
 
     @Override
     public User findByEmail(String emailUser) {
-        // TODO
-        Map<String, User> userMap = new HashMap<>();
+        List<User> users = findAll();
+        users = users
+                .stream()
+                .filter(user -> user.getEmail().equals(emailUser))
+                .collect(Collectors.toList());
+        for (User user: users) {
+            if (user.getEmail().equals(emailUser)) {
+                return user;
+            }
+        }
 
-        String[] data = new String[3];
+        return null;
+    }
+
+    private List<User> findAll(){
+
+        List<User> result = new ArrayList<>();
+
+        String[] data;
+
         File file = new File(this.fileName);
-        try (BufferedReader br = new BufferedReader(new FileReader(file)))
-        {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 data = line.split("\\|");
-                User user = new User(data[0],data[1], data[2]);
-                userMap.put(data[1], user);
+                String id = data[0];
+                String email = data[1];
+                String password = data[2];
+                User user = User.builder()
+                        .id(id)
+                        .email(email)
+                        .password(password)
+                        .build();
+                result.add(user);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        }catch (NullPointerException | ArrayIndexOutOfBoundsException | IOException e){
+            throw new RuntimeException(e);
         }
-        if (userMap.containsKey(emailUser)) {
-            return userMap.get(emailUser);
-        } return null;
+        return result;
     }
 }
